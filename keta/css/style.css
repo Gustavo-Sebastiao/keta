@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../assets/imagens/Nova pasta/ChatGPT Image 20 de abr. de 2026, 21_28_48.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(8rem, 22vw, 26rem); /* Tamanho menor, mas ainda bem grande */
+    font-family: 'Times New Roman', Times, serif; /* Ou 'Playfair Display' definida no HTML, serifa forte */
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 25vw; /* Aumentado de 12vw para 25vw para afastar bastante "KE" de "TA" */
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.left-text {
+    color: #ffffff; /* Texto branco no lado preto */
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -2vw; /* Letras K E juntinhas */
+}
+
+.right-text {
+    color: #000000; /* Texto preto no lado branco */
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -2vw; /* Letras T A juntinhas */
+}
+
+/* Imagens da modelo centralizadas e preparadas para crossfade */
+.center-model {
+    position: absolute;
+    bottom: -2vh; /* Âncora na base suave */
+    left: 50%;
+    transform: translateX(-48%); /* Centraliza compensando levemente a pose dela */
+    height: 88vh; /* Altura reduzida para não cortar os braços nas bordas da tela */
+    max-height: none; 
+    object-fit: contain; /* Mantém a proporção real da foto não distorcida */
+    z-index: 5;
+    pointer-events: none; /* Garante que o usuário consiga interagir/arrastar ao redor sem bugar */
+    
+    /* Configuração de Animação Crossfade (3 imagens = dura 9s no total) */
+    opacity: 0;
+    animation: fadeSlide 9s infinite;
+}
+
+/* Configuração do atraso para rotatividade suave */
+.slide-1 { animation-delay: 0s; }
+.slide-2 { animation-delay: 3s; }
+.slide-3 { animation-delay: 6s; }
+
+/* 
+ A lógica de transição para cada imagem com 9s de ciclo:
+ Permanece focada por ~1 terço do tempo (3s).
+ */
+@keyframes fadeSlide {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; } /* Entra suavemente */
+    33%  { opacity: 1; } /* Permanece fixo seu tempo */
+    38%  { opacity: 0; } /* Fade out suave dando espaço pra próxima */
+    100% { opacity: 0; } /* Se mantém invisível o resto do ciclo */
+}
+
+/* =========================================================================
+   Navegação / Header
+   ========================================================================= */
+.header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 5vh 6vw; /* Distância do topo e das margens laterais */
+    z-index: 20; /* Fica acima da modelo e de quaisquer letras */
+    display: flex;
+    justify-content: flex-end; /* Posiciona o menu lá no canto direito */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 4vw; /* Espaçamento bem largo entre os links igual da foto */
+}
+
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: #000000; /* Texto em preto contrastando no lado branco da foto */
+    font-family: 'Inter', sans-serif; /* Fonte limpa */
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+/* Pseudo-elemento da linha inferior (escondida inicialmente com width 0) */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px; /* espessura fina e elegante */
+    bottom: -6px; /* distância da linha para o texto */
+    left: 0;
+    background-color: #000000;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Expande a linha da esquerda pra direita quando o mouse passar em cima */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
