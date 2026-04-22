@@ -4,14 +4,38 @@
     box-sizing: border-box;
 }
 
+/* =========================================================================
+   Tipografia Personalizada
+   ========================================================================= */
+@font-face {
+    font-family: 'Lemon Milk';
+    src: url('../assets/fontes/LEMONMILK-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lemon Milk';
+    src: url('../assets/fontes/LEMONMILK-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-image: url("../assets/images/brand/keta-bg.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    background-attachment: fixed; /* Impede que o papel de parede se mova durante o scroll */
+    height: 100vh; /* Altura visual inicial */
+    min-height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: #000; /* Fallback */
 }
 
@@ -46,7 +70,87 @@ body {
     to { transform: rotate(360deg); }
 }
 
+/* =========================================================================
+   Efeito de Revista: Palco de Scroll Horizontal (amarrado ao scroll vertical)
+   ========================================================================= */
+#magazine-pin {
+    position: relative;
+    height: 250vh; /* 100vh Slide + 50vh Margem Segura + 100vh para abrigar a Fase 2 */
+}
+
+.sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Oculta a seção de informações enquanto ela não entra */
+}
+
 .hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* =========================================================================
+   Seção Informações (A página que desliza)
+   ========================================================================= */
+#informacoes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: translateX(100%); /* Começa totalmente fora, à direita */
+    will-change: transform;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Atraso luxuoso e flutuante desvinculando do atrito da "rodinha" do mouse */
+    z-index: 2;
+    background-image: url("../assets/images/brand/fundo_2_5.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #000;
+}
+
+/* =========================================================================
+   Seção Informações Step 2 (Fundo 3.0 Fade in)
+   ========================================================================= */
+#informacoes-step2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0; /* Começa invisível */
+    will-change: opacity;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 3; /* Imprime por cima do #informacoes, mas ABAIXO do 3D container (z-index 10) */
+    background-image: url("../assets/images/brand/fundo_3.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #000;
+    pointer-events: none; /* Deixa o mouse passar pela camada invisível no step 1 */
+}
+
+#informacoes-step2.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.section {
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -54,6 +158,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 .title {
     font-size: clamp(8rem, 22vw, 26rem); /* Tamanho menor, mas ainda bem grande */
@@ -108,9 +213,9 @@ body {
  */
 @keyframes fadeSlide {
     0%   { opacity: 0; }
-    5%   { opacity: 1; } /* Entra suavemente */
-    33%  { opacity: 1; } /* Permanece fixo seu tempo */
-    38%  { opacity: 0; } /* Fade out suave dando espaço pra próxima */
+    16.6% { opacity: 1; } /* Entra suavemente (1.5s) */
+    33.3% { opacity: 1; } /* Permanece fixo seu tempo (1.5s) */
+    50%  { opacity: 0; } /* Fade out suave dando espaço pra próxima (1.5s) */
     100% { opacity: 0; } /* Se mantém invisível o resto do ciclo */
 }
 
@@ -118,12 +223,12 @@ body {
    Navegação / Header
    ========================================================================= */
 .header {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     width: 100%;
     padding: 5vh 6vw; /* Distância do topo e das margens laterais */
-    z-index: 20; /* Fica acima da modelo e de quaisquer letras */
+    z-index: 100; /* Fica acima de tudo */
     display: flex;
     justify-content: flex-end; /* Posiciona o menu lá no canto direito */
 }
@@ -141,7 +246,7 @@ body {
     font-family: 'Inter', sans-serif; /* Fonte limpa */
     font-size: 0.9rem;
     font-weight: 500;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.8s ease-in-out;
 }
 
 /* Pseudo-elemento da linha inferior (escondida inicialmente com width 0) */
@@ -153,12 +258,23 @@ body {
     bottom: -6px; /* distância da linha para o texto */
     left: 0;
     background-color: #000000;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out, background-color 0.8s ease-in-out;
 }
 
 /* Expande a linha da esquerda pra direita quando o mouse passar em cima */
 .nav-links a:hover::after {
     width: 100%;
+}
+
+/* Modificador Dinâmico para Ocultar o Menu na Fase 3 */
+.header {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.header.menu-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
 }
 
 .nav-links a:hover {
@@ -177,4 +293,130 @@ body {
 .stagger-up.appear {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* O bloco principal de estilos "Seção Informações" já foi definido acima no magazine-pin */
+
+/* =========================================================================
+   Conteúdo de Texto (Esquerda para o Diamante, Direita para o Texto)
+   ========================================================================= */
+.info-content-right {
+    position: absolute;
+    right: 8vw; /* Fica no espaço branco da direita */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40vw; /* Usa o máximo de espaço sem vazar */
+    max-width: 550px;
+    z-index: 10;
+    text-align: left;
+}
+
+.info-title {
+    font-family: 'Lemon Milk', sans-serif;
+    font-size: clamp(2rem, 3vw, 3rem); /* Levemente ajustado pois Lemon Milk é mais espaçada */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.info-subtitle {
+    font-family: Arial, sans-serif;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.info-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.info-features li {
+    font-family: Arial, sans-serif;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    line-height: 1.5;
+    color: #444;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.info-features li::before {
+    content: "◇"; /* Detalhe luxuoso */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #000;
+    font-weight: bold;
+}
+
+.info-features strong {
+    color: #000;
+    font-weight: 600;
+}
+
+.info-content-left {
+    position: absolute;
+    left: 8vw; /* Fica no espaço do losango da fundo 3.0 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40vw; /* Usa o máximo de espaço sem vazar */
+    max-width: 550px;
+    z-index: 10;
+    text-align: left;
+}
+
+/* Tema Claro para Textos sobre Fundo Preto */
+.theme-light .info-title {
+    color: #ffffff;
+}
+.theme-light .info-subtitle {
+    color: #cccccc;
+}
+.theme-light .info-features li {
+    color: #bbbbbb;
+}
+.theme-light .info-features li::before {
+    color: #ffffff;
+}
+.theme-light .info-features strong {
+    color: #ffffff;
+}
+
+/* =========================================================================
+   Modelo 3D Container
+   ========================================================================= */
+.model-container {
+    position: absolute;
+    top: 50%;
+    left: 5vw; /* Posição inicial Fase 1 */
+    transform: translateY(-50%) translateX(100vw); /* Começa fora igual ao painel 1 */
+    width: 45vw;
+    height: 45vw;
+    background-color: transparent;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    will-change: transform;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); /* Transição majestosa para o movimento automático */
+}
+
+#tshirt-canvas {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    cursor: grab;
+    display: block;
+}
+
+#tshirt-canvas:active {
+    cursor: grabbing;
 }

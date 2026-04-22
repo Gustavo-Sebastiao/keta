@@ -15,25 +15,75 @@
         <nav class="navbar">
             <ul class="nav-links">
                 <li class="stagger-up"><a href="#inicio">início</a></li>
-                <li class="stagger-up"><a href="#comprar">Comprar</a></li>
                 <li class="stagger-up"><a href="#informacoes">Informações</a></li>
+                <li class="stagger-up"><a href="#comprar">Comprar</a></li>
                 <li class="stagger-up"><a href="#atendimento">Atendimento</a></li>
             </ul>
         </nav>
     </header>
-    <div class="hero">
-        <h1 class="title">
-            <!-- Texto separado em branco e preto -->
-            <span class="left-text stagger-up">K E</span>
-            
-            <!-- Imagens da modelo para o slideshow em crossfade no espaço central -->
-            <img src="assets/images/models/model-1.png" class="center-model slide-1" alt="Modelo Keta 1">
-            <img src="assets/images/models/model-2.png" class="center-model slide-2" alt="Modelo Keta 2">
-            <img src="assets/images/models/model-3.png" class="center-model slide-3" alt="Modelo Keta 3">
-            
-            <span class="right-text stagger-up">T A</span>
-        </h1>
+    <!-- Pin Wrapper for Magazine Effect -->
+    <div id="magazine-pin">
+        <div class="sticky-container">
+            <!-- Hero -->
+            <div class="hero section" id="inicio">
+                <h1 class="title">
+                    <span class="left-text stagger-up">K E</span>
+                    <img src="assets/images/models/model-1.png" class="center-model slide-1" alt="Modelo Keta 1">
+                    <img src="assets/images/models/model-2.png" class="center-model slide-2" alt="Modelo Keta 2">
+                    <img src="assets/images/models/model-3.png" class="center-model slide-3" alt="Modelo Keta 3">
+                    <span class="right-text stagger-up">T A</span>
+                </h1>
+            </div>
+
+            <!-- Container Global do Modelo 3D (Desacoplado dos Fundos) -->
+            <div class="model-container">
+                <canvas id="tshirt-canvas"></canvas>
+            </div>
+
+            <!-- Informações (Fundo 1) -->
+            <section id="informacoes" class="section">
+                <!-- Conteúdo Premium à Direita -->
+                <div class="info-content-right">
+                    <h2 class="info-title">O Padrão de Excelência</h2>
+                    <p class="info-subtitle">Acreditamos que o básico deve ser extraordinário. Cada peça é projetada para quem não abre mão do conforto e da estética atemporal.</p>
+                    
+                    <ul class="info-features">
+                        <li><strong>Algodão de Alta Gramatura:</strong> Tecido robusto com toque macio, garantindo estrutura e durabilidade superior.</li>
+                        <li><strong>Corte Anatômico:</strong> Modelagem desenvolvida para proporcionar um caimento impecável que se adapta ao corpo.</li>
+                        <li><strong>Resistência Térmica:</strong> Fibras naturais que permitem a respirabilidade total da pele em qualquer clima.</li>
+                        <li><strong>Acabamento de Alfaiataria:</strong> Costuras reforçadas e detalhes invisíveis que elevam o padrão da peça.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Informações (Fundo 3 - Entra sobre o Fundo 1) -->
+            <section id="informacoes-step2" class="section">
+                <!-- Conteúdo Premium à Esquerda (Tema Claro para fundo Preto) -->
+                <div class="info-content-left theme-light">
+                    <h2 class="info-title">Essencial por Definição</h2>
+                    <p class="info-subtitle">Design limpo, qualidade máxima. Redefinimos o conceito de vestuário básico com foco total na experiência do usuário.</p>
+                    
+                    <ul class="info-features">
+                        <li><strong>Toque de Seda:</strong> Processo de lavagem especial que garante suavidade desde o primeiro uso.</li>
+                        <li><strong>Preservação da Cor:</strong> Tecnologia de tingimento que mantém a intensidade do preto e do branco por muito mais tempo.</li>
+                        <li><strong>Sustentabilidade Consciente:</strong> Produção com baixo impacto ambiental e matérias-primas certificadas.</li>
+                        <li><strong>Versatilidade Absoluta:</strong> Uma peça feita para transitar entre o casual e o sofisticado sem esforço.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
     </div>
+
+    <!-- Import Map for Three.js ES Modules -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
     <script src="javascript/script.js"></script>
+    <script type="module" src="javascript/3d-model.js"></script>
 </body>
 </html>
