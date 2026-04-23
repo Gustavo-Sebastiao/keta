@@ -75,8 +75,10 @@ body {
    ========================================================================= */
 #magazine-pin {
     position: relative;
-    height: 250vh; /* 100vh Slide + 50vh Margem Segura + 100vh para abrigar a Fase 2 */
+    height: 350vh; /* 100vh Slide + 50vh Margem Segura + 100vh Fase 2 + 100vh Fase 3 (Comprar) */
 }
+
+
 
 .sticky-container {
     position: sticky;
@@ -405,8 +407,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    will-change: transform;
-    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); /* Transição majestosa para o movimento automático */
+    will-change: transform, opacity;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease; /* Transição majestosa para o movimento automático */
 }
 
 #tshirt-canvas {
@@ -419,4 +421,196 @@ body {
 
 #tshirt-canvas:active {
     cursor: grabbing;
+}
+
+/* =========================================================================
+   Botão Visitar Loja
+   ========================================================================= */
+.visit-store-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: 1px solid #000000;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.visit-store-btn:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* =========================================================================
+   Seção Comprar (Split Screen)
+   ========================================================================= */
+.shop-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    background-color: transparent;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.shop-section.active-shop {
+    pointer-events: all;
+    background-color: #000;
+    transition: background-color 0.8s ease;
+}
+
+.shop-column {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado inicial (escondido fora da tela) */
+.shop-column.shop-left {
+    transform: translateY(-100%);
+}
+
+.shop-column.shop-right {
+    transform: translateY(100%);
+}
+
+/* Quando a seção entra na tela (via JS class active-shop) */
+.shop-section.active-shop .shop-column.shop-left,
+.shop-section.active-shop .shop-column.shop-right {
+    transform: translateY(0);
+}
+
+.shop-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shop-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Efeito de Overlay para dar leitura ao texto */
+.shop-column::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    transition: background 0.8s ease;
+    z-index: 1;
+}
+
+.shop-column:hover .shop-img-wrapper {
+    transform: scale(1.05);
+}
+
+.shop-column:hover::after {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.shop-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-category-title {
+    font-family: 'Lemon Milk', sans-serif;
+    font-size: clamp(2rem, 4vw, 4rem);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    transition: transform 0.6s ease;
+}
+
+.shop-explore-btn {
+    display: inline-block;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 5px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.shop-column:hover .shop-category-title {
+    transform: translateY(-10px);
+}
+
+.shop-column:hover .shop-explore-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ajustes responsivos para telas menores (empilha as colunas) */
+@media (max-width: 768px) {
+    .shop-section {
+        flex-direction: column;
+        height: 100vh;
+    }
+    .shop-column {
+        width: 100%;
+        height: 50vh;
+    }
+}
+
+/* =========================================================================
+   Estados Dinâmicos (Controlados via JS/Body)
+   ========================================================================= */
+body.is-in-shop .header {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: all !important;
+}
+
+body.is-in-shop .header .nav-links a {
+    color: #ffffff !important;
+}
+
+body.is-in-shop .header .nav-links a::after {
+    background-color: #ffffff !important;
+}
+
+body.is-in-shop .visit-store-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
 }

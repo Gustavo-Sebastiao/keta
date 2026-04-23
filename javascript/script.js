@@ -78,9 +78,26 @@ window.addEventListener('load', () => {
         // Se cruzar essa linha (125vh), a Fase 2 assume automaticamente e viaja a camisa!
         const triggerPhase2 = windowH * 1.25; 
         
-        if (scrolledInPin > triggerPhase2) {
+        // --- FASE 3: Seção Comprar (Após 225vh) ---
+        const triggerPhase3 = windowH * 2.25;
+        const shopSection = document.getElementById('comprar');
+        
+        if (scrolledInPin > triggerPhase3) {
+            if (shopSection) shopSection.classList.add('active-shop');
+            document.body.classList.add('is-in-shop');
+            
+            // Oculta o modelo 3D pois a loja fica por cima
+            modelContainer.style.opacity = "0";
+            modelContainer.style.pointerEvents = "none";
+        } else if (scrolledInPin > triggerPhase2) {
+            if (shopSection) shopSection.classList.remove('active-shop');
+            document.body.classList.remove('is-in-shop');
+            
             informacoesStep2.classList.add('active');
             informacoesStep2.style.opacity = ""; 
+            
+            modelContainer.style.opacity = "1";
+            modelContainer.style.pointerEvents = "all";
             
             // Oculta o Menu Principal para não poluir a tela escura
             if (headerEl) headerEl.classList.add('menu-hidden');
@@ -88,8 +105,14 @@ window.addEventListener('load', () => {
             // Camisa viaja pra direita
             modelTranslateX = 42; 
         } else {
+            if (shopSection) shopSection.classList.remove('active-shop');
+            document.body.classList.remove('is-in-shop');
+            
             informacoesStep2.classList.remove('active');
             informacoesStep2.style.opacity = "";
+            
+            modelContainer.style.opacity = "1";
+            modelContainer.style.pointerEvents = "all";
             
             // Retorna o Menu Principal à tela
             if (headerEl) headerEl.classList.remove('menu-hidden');
@@ -118,6 +141,20 @@ window.addEventListener('load', () => {
         });
     }
 
+    // Lógica para interceptar o Clique no Menu (Comprar)
+    const navComprar = document.querySelector('a[href="#comprar"]');
+    if (navComprar) {
+        navComprar.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Leva para a Fase 3 (após 2.25vh da âncora do pinStage)
+            const targetY = pinStage.offsetTop + (window.innerHeight * 2.3);
+            window.scrollTo({
+                top: targetY,
+                behavior: 'smooth'
+            });
+        });
+    }
+
     // Lógica para interceptar o Clique no Menu (Início)
     const navInicio = document.querySelector('a[href="#inicio"]');
     if (navInicio) {
@@ -130,5 +167,7 @@ window.addEventListener('load', () => {
             });
         });
     }
+
+
 });
 
