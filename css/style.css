@@ -23,6 +23,17 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
+
+.snap-point {
+    position: absolute;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    pointer-events: none;
 }
 
 body {
@@ -75,10 +86,8 @@ body {
    ========================================================================= */
 #magazine-pin {
     position: relative;
-    height: 350vh; /* 100vh Slide + 50vh Margem Segura + 100vh Fase 2 + 100vh Fase 3 (Comprar) */
+    height: 400vh; /* Força 400vh para as 4 fases do scroll */
 }
-
-
 
 .sticky-container {
     position: sticky;
@@ -232,7 +241,19 @@ body {
     padding: 5vh 6vw; /* Distância do topo e das margens laterais */
     z-index: 100; /* Fica acima de tudo */
     display: flex;
-    justify-content: flex-end; /* Posiciona o menu lá no canto direito */
+    justify-content: space-between; /* Posiciona logo na esquerda e menu na direita */
+    align-items: center;
+}
+
+.header-logo {
+    height: 34px; /* Tamanho delicado e proporcional */
+    width: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(-10px);
+    /* Assumindo que a logo seja preta, aplicamos filtro para ficar branca no fundo escuro */
+    filter: brightness(0) invert(1); 
 }
 
 .nav-links {
@@ -613,4 +634,10 @@ body.is-in-shop .visit-store-btn {
     opacity: 0;
     pointer-events: none;
     transform: translateY(20px);
+}
+
+body.is-in-shop .header-logo {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }

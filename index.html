@@ -12,17 +12,24 @@
 <body>
     <div class="loader"></div>
     <header class="header">
+        <img src="assets/images/brand/keta-logo.png" alt="Keta Logo" class="header-logo">
         <nav class="navbar">
             <ul class="nav-links">
                 <li class="stagger-up"><a href="#inicio">início</a></li>
                 <li class="stagger-up"><a href="#informacoes">Informações</a></li>
                 <li class="stagger-up"><a href="#comprar">Comprar</a></li>
-                <li class="stagger-up"><a href="#atendimento">Atendimento</a></li>
+                <li class="stagger-up"><a href="#ajuda">Ajuda</a></li>
             </ul>
         </nav>
     </header>
     <!-- Pin Wrapper for Magazine Effect -->
     <div id="magazine-pin">
+        <!-- Snap Points invisíveis e absolutos para ancorar o scroll do documento -->
+        <div class="snap-point" style="top: 0vh;"></div>
+        <div class="snap-point" style="top: 100vh;"></div>
+        <div class="snap-point" style="top: 200vh;"></div>
+        <div class="snap-point" style="top: 300vh;"></div>
+
         <div class="sticky-container">
             <!-- Hero -->
             <div class="hero section" id="inicio">
@@ -80,7 +87,7 @@
                     </div>
                     <div class="shop-content">
                         <h2 class="shop-category-title">Masculino</h2>
-                        <a href="#" class="shop-explore-btn">Explorar <span class="arrow">→</span></a>
+                        <a href="marketplace.html?cat=masculino" class="shop-explore-btn">Explorar <span class="arrow">→</span></a>
                     </div>
                 </div>
                 <div class="shop-column shop-right">
@@ -89,7 +96,7 @@
                     </div>
                     <div class="shop-content">
                         <h2 class="shop-category-title">Feminino</h2>
-                        <a href="#" class="shop-explore-btn">Explorar <span class="arrow">→</span></a>
+                        <a href="marketplace.html?cat=feminino" class="shop-explore-btn">Explorar <span class="arrow">→</span></a>
                     </div>
                 </div>
             </section>
@@ -107,6 +114,6 @@
     </script>
     <script src="javascript/script.js"></script>
     <script type="module" src="javascript/3d-model.js"></script>
-    <a href="#" class="visit-store-btn">visitar loja</a>
+    <a href="marketplace.html" class="visit-store-btn">visitar loja</a>
 </body>
 </html>

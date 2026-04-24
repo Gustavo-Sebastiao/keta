@@ -73,13 +73,12 @@ window.addEventListener('load', () => {
         // O modelo entra escorregando junto com o Painel 1
         let modelTranslateX = (1 - progress1) * 100;
 
-        // --- FASE 2: Gatilho Automático (Após 125vh) ---
-        // Aqui o usuário tem um "respiro" de 25% da tela pra ficar admirando a primeira parte.
-        // Se cruzar essa linha (125vh), a Fase 2 assume automaticamente e viaja a camisa!
-        const triggerPhase2 = windowH * 1.25; 
+        // --- FASE 2: Gatilho Automático (Após 150vh) ---
+        // Se cruzar essa linha (1.5vh), a Fase 2 assume automaticamente e viaja a camisa!
+        const triggerPhase2 = windowH * 1.5; 
         
-        // --- FASE 3: Seção Comprar (Após 225vh) ---
-        const triggerPhase3 = windowH * 2.25;
+        // --- FASE 3: Seção Comprar (Após 250vh) ---
+        const triggerPhase3 = windowH * 2.5;
         const shopSection = document.getElementById('comprar');
         
         if (scrolledInPin > triggerPhase3) {
@@ -131,9 +130,8 @@ window.addEventListener('load', () => {
     if (navInformacoes) {
         navInformacoes.addEventListener('click', (e) => {
             e.preventDefault();
-            // Leva Exatamente para o ponto final onde a Fase 1 concluiu o slide. 
-            // Neste ponto (100vh), o usuário cai na "zona de conforto", sem engatilhar o Step 2.
-            const targetY = pinStage.offsetTop + window.innerHeight;
+            // Leva Exatamente para a Fase 1 (100vh de scroll no magazine)
+            const targetY = pinStage.offsetTop + (window.innerHeight * 1);
             window.scrollTo({
                 top: targetY,
                 behavior: 'smooth'
@@ -146,8 +144,8 @@ window.addEventListener('load', () => {
     if (navComprar) {
         navComprar.addEventListener('click', (e) => {
             e.preventDefault();
-            // Leva para a Fase 3 (após 2.25vh da âncora do pinStage)
-            const targetY = pinStage.offsetTop + (window.innerHeight * 2.3);
+            // Leva Exatamente para a Fase 3 (300vh de scroll no magazine)
+            const targetY = pinStage.offsetTop + (window.innerHeight * 3);
             window.scrollTo({
                 top: targetY,
                 behavior: 'smooth'

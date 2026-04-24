@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keta — Loja</title>
+    <meta name="description" content="Explore a coleção Keta. Roupas masculinas e femininas de alta qualidade.">
+    <link rel="icon" type="image/png" href="assets/images/brand/keta-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/marketplace.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="mp-header">
+        <a href="index.html" class="mp-logo-link">
+            <img src="assets/images/brand/keta-logo.png" alt="Keta" class="mp-logo">
+        </a>
+        <nav class="mp-nav">
+            <a href="index.html" class="mp-nav-link">Início</a>
+            <a href="marketplace.html?cat=masculino" class="mp-nav-link" data-cat="masculino">Masculino</a>
+            <a href="marketplace.html?cat=feminino" class="mp-nav-link" data-cat="feminino">Feminino</a>
+        </nav>
+        <div class="mp-cart-icon" id="cartIcon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            <span class="mp-cart-count" id="cartCount">0</span>
+        </div>
+    </header>
+
+    <!-- Hero Banner da Loja -->
+    <section class="mp-hero" id="mp-hero">
+        <div class="mp-hero-overlay"></div>
+        <div class="mp-hero-content">
+            <p class="mp-hero-tag">Nova Coleção</p>
+            <h1 class="mp-hero-title" id="heroTitle">Nossa Loja</h1>
+            <p class="mp-hero-subtitle" id="heroSubtitle">Qualidade que fala por si. Estilo que persiste.</p>
+        </div>
+
+    </section>
+
+    <!-- Barra de Filtros -->
+    <div class="mp-filter-bar">
+        <div class="mp-filter-left">
+            <span class="mp-results-count" id="resultsCount">8 peças</span>
+        </div>
+        <div class="mp-filter-right">
+            <select class="mp-sort-select" id="sortSelect">
+                <option value="default">Ordenar por</option>
+                <option value="price-asc">Menor Preço</option>
+                <option value="price-desc">Maior Preço</option>
+                <option value="name">Nome A–Z</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Grid de Produtos -->
+    <main class="mp-grid-wrapper">
+        <div class="mp-product-grid" id="productGrid">
+            <!-- Produtos injetados via JS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mp-footer">
+        <div class="mp-footer-inner">
+            <img src="assets/images/brand/keta-logo.png" alt="Keta" class="mp-footer-logo">
+            <p class="mp-footer-copy">© 2026 Keta. Todos os direitos reservados.</p>
+            <div class="mp-footer-links">
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Trocas & Devoluções</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal do Produto -->
+    <div class="mp-modal-overlay" id="modalOverlay">
+        <div class="mp-modal" id="productModal">
+            <button class="mp-modal-close" id="modalClose">✕</button>
+            <div class="mp-modal-body">
+                <div class="mp-modal-img-wrap">
+                    <img src="" alt="" id="modalImg">
+                </div>
+                <div class="mp-modal-info">
+                    <p class="mp-modal-cat" id="modalCat"></p>
+                    <h2 class="mp-modal-name" id="modalName"></h2>
+                    <p class="mp-modal-price" id="modalPrice"></p>
+                    <p class="mp-modal-desc" id="modalDesc"></p>
+                    <div class="mp-modal-sizes">
+                        <p class="mp-sizes-label">Tamanho</p>
+                        <div class="mp-sizes-grid" id="sizesGrid"></div>
+                    </div>
+                    <button class="mp-add-cart-btn" id="addCartBtn">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de Confirmação -->
+    <div class="mp-toast" id="toast">Item adicionado ao carrinho ✓</div>
+
+    <!-- Carrinho Lateral (Drawer) -->
+    <div class="mp-cart-overlay" id="cartOverlay"></div>
+    <div class="mp-cart-drawer" id="cartDrawer">
+        <div class="mp-cart-header">
+            <h2>Sua Sacola</h2>
+            <button class="mp-cart-close" id="cartClose">✕</button>
+        </div>
+        <div class="mp-cart-items" id="cartItemsContainer">
+            <!-- Itens do carrinho serão injetados aqui -->
+        </div>
+        <div class="mp-cart-footer">
+            <div class="mp-cart-total">
+                <span>Total</span>
+                <span id="cartTotalValue">R$ 0,00</span>
+            </div>
+            <button class="mp-checkout-btn">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <script src="javascript/marketplace.js"></script>
+</body>
+</html>
